@@ -1,51 +1,32 @@
-import { Link } from "@nextui-org/link";
-import { Snippet } from "@nextui-org/snippet";
-import { Code } from "@nextui-org/code"
-import { button as buttonStyles } from "@nextui-org/theme";
-import { siteConfig } from "@/config/site";
-import { title, subtitle } from "@/components/primitives";
-import { GithubIcon } from "@/components/icons";
+
+"use client";
+
+import { CustomExtendModal, CustomModal, CustomModalWithFunction } from "@/components/modal";
+import { Button } from "@nextui-org/button";
+import { ModalHeader, useDisclosure } from "@nextui-org/react";
 
 export default function Home() {
+	const {onOpen, isOpen, onOpenChange} = useDisclosure();
+	const {onOpen: onOpenVariant, isOpen: isOpenVariant, onOpenChange: onOpenChangeVariant} = useDisclosure();
+	const {onOpen: onOpenFunction, isOpen: isOpenFunction, onOpenChange: onOpenChangeFunction} = useDisclosure();
 	return (
 		<section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
-			<div className="inline-block max-w-lg text-center justify-center">
-				<h1 className={title()}>Make&nbsp;</h1>
-				<h1 className={title({ color: "violet" })}>beautiful&nbsp;</h1>
-				<br />
-				<h1 className={title()}>
-					websites regardless of your design experience.
-				</h1>
-				<h2 className={subtitle({ class: "mt-4" })}>
-					Beautiful, fast and modern React UI library.
-				</h2>
-			</div>
+			<Button onPress={onOpen}>Open Modal</Button>
+			<CustomModal isOpen={isOpen} onOpenChange={onOpenChange}>
+				<ModalHeader>Modal Header</ModalHeader>
+			</CustomModal>
 
-			<div className="flex gap-3">
-				<Link
-					isExternal
-					href={siteConfig.links.docs}
-					className={buttonStyles({ color: "primary", radius: "full", variant: "shadow" })}
-				>
-					Documentation
-				</Link>
-				<Link
-					isExternal
-					className={buttonStyles({ variant: "bordered", radius: "full" })}
-					href={siteConfig.links.github}
-				>
-					<GithubIcon size={20} />
-					GitHub
-				</Link>
-			</div>
+			<Button onPress={onOpenVariant} color="primary">Open Modal with variants</Button>
 
-			<div className="mt-8">
-				<Snippet hideSymbol hideCopyButton variant="flat">
-					<span>
-						Get started by editing <Code color="primary">app/page.tsx</Code>
-					</span>
-				</Snippet>
-			</div>
+			<CustomExtendModal isOpen={isOpenVariant} onOpenChange={onOpenChangeVariant}>
+				<ModalHeader>Modal Header Variant</ModalHeader>
+			</CustomExtendModal>
+
+			<Button onPress={onOpenFunction} color="primary">Open Modal with function</Button>
+
+			<CustomModalWithFunction isOpen={isOpenFunction} onOpenChange={onOpenChangeFunction}>
+				<ModalHeader>Modal Header With Function</ModalHeader>
+			</CustomModalWithFunction>
 		</section>
 	);
 }
